@@ -10,6 +10,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 # Some constants
 INPUT_FOLDER = '/home/yangfang/CT/sample_images/'
+INPUT_FOLDER = '/home/yangfang/CT/CT_FangYang/sample_huaxi/'
 patients = os.listdir(INPUT_FOLDER)
 patients.sort()
 
@@ -61,7 +62,7 @@ plt.ylabel("Frequency")
 plt.show()
 
 # Show some slice in the middle
-plt.imshow(first_patient_pixels[80], cmap=plt.cm.gray)
+plt.imshow(first_patient_pixels[50], cmap=plt.cm.gray)
 plt.show()
 
 
