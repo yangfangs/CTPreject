@@ -6,12 +6,14 @@ import os
 import scipy.ndimage
 import matplotlib.pyplot as plt
 
+
 from skimage import measure, morphology
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 # Some constants
-INPUT_FOLDER = '/home/yangfang/CT/sample_images/'
+# INPUT_FOLDER = '/home/yangfang/CT/CT/sample_images/'
 # INPUT_FOLDER = '/home/yangfang/CT/CT_FangYang/sample_huaxi/'
+INPUT_FOLDER = '/home/yangfang/CT/Check_case/FU_TING_ZHE/test/'
 patients = os.listdir(INPUT_FOLDER)
 patients.sort()
 
@@ -131,7 +133,7 @@ def segment_lung_mask(image, fill_lung_structures=True):
     # 0 is treated as background, which we do not want
     binary_image = np.array(image > -320, dtype=np.int8) + 1
     labels = measure.label(binary_image)
-
+    # labels = morphology.remove_small_objects(binary_image,min_size=300,connectivity=1)
     # Pick the pixel in the very corner to determine which label is air.
     #   Improvement: Pick multiple background labels from around the patient
     #   More resistant to "trays" on which the patient lays cutting the air
@@ -166,6 +168,17 @@ def segment_lung_mask(image, fill_lung_structures=True):
 
 segmented_lungs = segment_lung_mask(pix_resampled, False)
 segmented_lungs_fill = segment_lung_mask(pix_resampled, True)
+
+
+def image_all(image):
+    # not actually binary, but 1 and 2.
+    # 0 is treated as background, which we do not want
+    binary_image = np.array(image > -320, dtype=np.int8) + 1
+    return binary_image
+
+
+image_a = image_all(pix_resampled)
+
 
 plot_3d(segmented_lungs, 0)
 
